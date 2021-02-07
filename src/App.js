@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.scss";
+import OrgOne from "./org-one/OrgOne";
+import OrgTwo from "./org-two/OrgTwo";
+
+// import { Tree } from "primereact/tree";
+// import { NodeService } from "../service/NodeService";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <OrgOne />
+      <OrgTwo />
+
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Tree
+          value={nodes}
+          dragdropScope="demo"
+          onDragDrop={(event) => setNodes(event.value)}
+        />
+      </header> */}
     </div>
   );
 }
