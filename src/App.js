@@ -1,13 +1,13 @@
 import "./App.scss";
-import OrgTwo from "./og/org";
+import Container from "./Drag-and-drop/Container";
 
 import OrgChart from "./org-chart/OrgChart";
 
 function App() {
   return (
-    <div className="App" style={{ padding: "20px" }}>
+    <div className="App">
       <OrgChart />
-      {/* <OrgTwo /> */}
+      <Container />
     </div>
   );
 }
