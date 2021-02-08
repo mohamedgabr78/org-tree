@@ -1,35 +1,105 @@
+import { useEffect, useState } from "react";
 import "./OrgChart.scss";
-import { dummy_data } from "./dummy-data";
 
-function OrgChart() {
+function OrgChart(props) {
+  const { chartData, onChange } = props;
   const colors = ["#8dccad", "#f5cc7f"];
 
-  const recursiveRenderChart = (chartData, current_level) => {
+  const [draggedNode, setDraggedNode] = useState(null);
+  const [nodeDragFinish, setNodeDragFinish] = useState(false);
+  const [nodeIsOnDragSpace, setNodeIsOnDragSpace] = useState(false);
+
+  const resetDragStates = () => {
+    setDraggedNode(null);
+    setNodeDragFinish(false);
+    setNodeIsOnDragSpace(false);
+  };
+
+  useEffect(() => {
+    if (
+      draggedNode &&
+      nodeIsOnDragSpace &&
+      nodeDragFinish &&
+      JSON.stringify(draggedNode.indexs) !==
+        JSON.stringify(nodeIsOnDragSpace.indexs)
+    ) {
+      // dragged node is inside the node key of draggedNode state
+      // and the indexs is an array indicating the position of the node in the chart data
+      let _actualDraggedNode = { ...draggedNode.node };
+      let draggedNodeIndexs = [...draggedNode.indexs];
+
+      // drop node is inside the node key of nodeIsOnDragSpace state
+      // and the indexs is an array indicating the position of the node in the chart data
+      let _actualdroppedNode = { ...nodeIsOnDragSpace.node };
+      let droppedNodeIndexs = [...nodeIsOnDragSpace.indexs];
+
+      // copying the original state
+      let _chartData = { ...chartData };
+
+      let new_node = [..._chartData.children];
+      // putting the node inside the children of the drop node
+      let last_new = droppedNodeIndexs.pop();
+      droppedNodeIndexs.forEach((p) => {
+        new_node = new_node[p].children;
+      });
+      new_node[last_new].children = new_node[last_new].children
+        ? [...new_node[last_new].children, _actualDraggedNode]
+        : [_actualDraggedNode];
+
+      // remove the node from its original position
+      let removed_node = [..._chartData.children];
+      // putting the node inside the children of the drop node
+      let b4_last_remove = draggedNodeIndexs.pop();
+      let last_remove = draggedNodeIndexs.pop();
+      draggedNodeIndexs.forEach((p) => {
+        removed_node = removed_node[p].children;
+      });
+      if (removed_node[last_remove]) {
+        // removing from an ordinary node
+        removed_node[last_remove].children = removed_node[
+          last_remove
+        ].children.filter((el) => el.id !== _actualDraggedNode.id);
+      } else {
+        // removing from the head children
+        removed_node.splice(b4_last_remove, 1);
+        _chartData.children = removed_node;
+      }
+
+      onChange({ target: { value: { ..._chartData } } });
+
+      resetDragStates();
+    }
+  }, [draggedNode, nodeIsOnDragSpace, nodeDragFinish]);
+
+  const recursiveRenderChart = (node, current_level, parent_index) => {
     return (
       <ol
         className={"level-wrapper"}
         style={{
-          gridTemplateColumns: `repeat(${chartData.children?.length}, 1fr)`,
+          gridTemplateColumns: `repeat(${node.children?.length}, 1fr)`,
         }}
       >
-        {chartData.children &&
-          chartData.children.length > 0 &&
-          chartData.children.map((child, index) => {
+        {node.children &&
+          node.children.length > 0 &&
+          node.children.map((child, index) => {
+            let indexs =
+              parent_index && parent_index.length > 0
+                ? [...parent_index, index]
+                : [index];
             return (
               <li
                 key={index}
                 className={`${
-                  chartData.children.length > 1
+                  node.children.length > 1
                     ? index === 0
                       ? "left-hr"
-                      : chartData.children.length === index + 1
+                      : node.children.length === index + 1
                       ? "right-hr"
                       : "center-hr"
                     : ""
                 }`}
               >
                 <div
-                  draggable="true"
                   className={`${
                     !child.children || child.children?.length === 0
                       ? "level-no-child"
@@ -40,10 +110,32 @@ function OrgChart() {
                   style={{
                     backgroundColor: current_level % 2 ? colors[0] : colors[1],
                   }}
+                  draggable={true}
+                  id={`node-${index}`}
+                  onDrag={(e) => {
+                    e.preventDefault();
+                    setDraggedNode({ node: child, indexs: indexs });
+                  }}
+                  onDragEnd={(e) => {
+                    e.preventDefault();
+                    setNodeDragFinish(true);
+                  }}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setNodeIsOnDragSpace({ node: child, indexs: indexs });
+                  }}
+                  onDragLeave={(e) => {
+                    e.preventDefault();
+                    setNodeIsOnDragSpace(false);
+                  }}
                 >
                   {child.arabicLabel}/{child.englishLabel}
                 </div>
-                {recursiveRenderChart(child, parseInt(current_level) + 1)}
+                {recursiveRenderChart(
+                  child,
+                  parseInt(current_level) + 1,
+                  indexs
+                )}
               </li>
             );
           })}
@@ -51,22 +143,22 @@ function OrgChart() {
     );
   };
 
-  const renderChart = (chartData) => {
+  const renderChart = (head) => {
     return (
-      chartData && (
+      head && (
         <div className={"org-chart"}>
           <div className={`level level-1 rectangle`}>
             <div>
-              {chartData.arabicLabel}/{chartData.englishLabel}
+              {head.arabicLabel}/{head.englishLabel}
             </div>
           </div>
-          {recursiveRenderChart(chartData, 2)}
+          {recursiveRenderChart(head, 2)}
         </div>
       )
     );
   };
 
-  return <div className="org-chart-container">{renderChart(dummy_data)}</div>;
+  return <div className="org-chart-container">{renderChart(chartData)}</div>;
 }
 
 export default OrgChart;

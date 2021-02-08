@@ -68,12 +68,22 @@
     // min-width: 150px;
     margin: 0 auto 40px;
     min-width: 250px;
+
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
   }
 
   .level-no-child {
     width: 70%;
     margin: 0 auto 40px;
     min-width: 250px;
+
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
   }
 
   .level-wrapper > li::before {

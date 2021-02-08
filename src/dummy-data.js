@@ -1,79 +1,63 @@
 export const dummy_data = {
   arabicLabel: "مدير",
   englishLabel: "Manager",
-  id: 3,
-  key: 3,
-  parents: [],
+  id: 1,
+
   children: [
     {
       arabicLabel: "موظف",
       englishLabel: "Employee",
       id: 2,
-      key: 2,
-      parents: [],
+
       children: [
         {
           arabicLabel: "2موظف",
           englishLabel: "Employee2",
-          id: 5,
-          key: 5,
-          parents: [],
+          id: 3,
+
           children: [
             {
               arabicLabel: "3موظف",
               englishLabel: "Employee4",
-              id: 6,
-              key: 6,
-              parents: [],
+              id: 4,
+            },
+            {
+              arabicLabel: "3موظف",
+              englishLabel: "Employee4",
+              id: 5,
             },
             {
               arabicLabel: "3موظف",
               englishLabel: "Employee4",
               id: 6,
-              key: 6,
-              parents: [],
             },
             {
               arabicLabel: "3موظف",
               englishLabel: "Employee4",
-              id: 6,
-              key: 6,
-              parents: [],
+              id: 7,
             },
             {
               arabicLabel: "3موظف",
               englishLabel: "Employee4",
-              id: 6,
-              key: 6,
-              parents: [],
-            },
-            {
-              arabicLabel: "3موظف",
-              englishLabel: "Employee4",
-              id: 6,
-              key: 6,
-              parents: [],
+              id: 8,
+
               children: [
                 {
                   arabicLabel: "3موظف",
                   englishLabel: "Employee4",
-                  id: 6,
-                  key: 6,
-                  parents: [],
+                  id: 9,
+
                   children: [
                     {
                       arabicLabel: "3موظف",
                       englishLabel: "Employee4",
-                      id: 6,
-                      key: 6,
-                      parents: [],
+                      id: 10,
+
                       children: [
                         {
                           arabicLabel: "3موظف",
                           englishLabel: "Employee4",
-                          id: 6,
-                          key: 6,
-                          parents: [],
+                          id: 11,
                         },
                       ],
                     },
@@ -86,83 +70,66 @@ export const dummy_data = {
       ],
     },
     {
-      id: 1,
-      key: 1,
-      parents: [],
+      id: 12,
+      arabicLabel: "تيست",
+      englishLabel: "test",
       children: [
         {
           arabicLabel: "3موظف",
           englishLabel: "Employee4",
-          id: 6,
-          key: 6,
-          parents: [],
+          id: 13,
         },
       ],
-      arabicLabel: "تيست",
-      englishLabel: "test",
     },
     {
-      id: 1,
-      key: 1,
-      parents: [],
+      id: 14,
+
       children: [
         {
           arabicLabel: "5موظف",
           englishLabel: "Employee5",
-          id: 6,
-          key: 6,
-          parents: [],
+          id: 15,
         },
         {
           arabicLabel: "6موظف",
           englishLabel: "Employee6",
-          id: 6,
-          key: 6,
-          parents: [],
+          id: 16,
         },
         {
           arabicLabel: "7موظف",
           englishLabel: "Employee7",
-          id: 6,
-          key: 6,
-          parents: [],
+          id: 17,
         },
       ],
       arabicLabel: "2تيست",
       englishLabel: "test2",
     },
     {
-      id: 1,
-      key: 1,
-      parents: [],
+      id: 18,
+
       children: [
         {
           arabicLabel: "7موظف",
           englishLabel: "Employee7",
-          id: 6,
-          key: 6,
-          parents: [],
+          id: 19,
         },
       ],
       arabicLabel: "2تيست",
       englishLabel: "test2",
     },
     {
-      id: 1,
-      key: 1,
-      parents: [],
+      id: 20,
+
       children: [
         {
           arabicLabel: "5موظف",
           englishLabel: "Employee5",
-          id: 6,
-          key: 6,
-          parents: [],
+          id: 21,
+
           children: [
             {
-              id: 1,
-              key: 1,
-              parents: [],
+              id: 22,
+
               children: [],
               arabicLabel: "hamo",
               englishLabel: "hamo",
@@ -172,16 +139,12 @@ export const dummy_data = {
         {
           arabicLabel: "6موظف",
           englishLabel: "Employee6",
-          id: 6,
-          key: 6,
-          parents: [],
+          id: 23,
         },
         {
           arabicLabel: "7موظف",
           englishLabel: "Employee7",
-          id: 6,
-          key: 6,
-          parents: [],
+          id: 24,
         },
       ],
       arabicLabel: "hamo",
