@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import "./OrgChart.scss";
+import { InputText } from "primereact/inputtext";
 
 function OrgChart(props) {
   const { chartData, onChange } = props;
   const colors = ["#8dccad", "#f5cc7f"];
-
   const [draggedNode, setDraggedNode] = useState(null);
   const [nodeDragFinish, setNodeDragFinish] = useState(false); // true when dragged node is just dropped
   const [nodeIsOnDragSpace, setNodeIsOnDragSpace] = useState(false);
+  const [add, setAdd] = useState(false);
 
   const resetDragStates = () => {
     setDraggedNode(null);
@@ -32,6 +33,35 @@ function OrgChart(props) {
       chartDataDeleting.children = removedNode;
     }
     onChange({ target: { value: { ...chartDataDeleting } } });
+  };
+  const handelAdd = (indexs) => {
+    let chartDataAdding = { ...chartData };
+    let addNode = [...chartDataAdding.children];
+    let currentNode = indexs.pop();
+
+    indexs.forEach((p) => {
+      addNode = addNode[p].children;
+    });
+    addNode[currentNode].children =
+      addNode[currentNode].children && addNode[currentNode].children.length > 0
+        ? [
+            ...addNode[currentNode].children,
+            {
+              arabicLabel: "[جديد]",
+              englishLabel: "new",
+              id: 10,
+              children: [],
+            },
+          ]
+        : [
+            {
+              arabicLabel: "[جديد]",
+              englishLabel: "new",
+              id: 10,
+              children: [],
+            },
+          ];
+    onChange({ target: { value: { ...chartDataAdding } } });
   };
 
   useEffect(() => {
@@ -178,6 +208,13 @@ function OrgChart(props) {
                     }}
                   >
                     delete
+                  </button>
+                  <button
+                    onClick={() => {
+                      handelAdd(indexs);
+                    }}
+                  >
+                    add
                   </button>
                 </div>
                 {recursiveRenderChart(
