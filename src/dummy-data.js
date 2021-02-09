@@ -152,3 +152,17 @@ export const dummy_data = {
     },
   ],
 };
+
+const g = {
+  arabicLabel: "",
+  englishLabel: "",
+  id: "",
+  children: [
+    {
+      arabicLabel: "",
+      englishLabel: "",
+      id: "",
+      children: [{ arabicLabel: "", englishLabel: "", id: "", children: [] }],
+    },
+  ],
+};
