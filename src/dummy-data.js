@@ -22,22 +22,22 @@ export const dummy_data = {
               id: 4,
             },
             {
-              arabicLabel: "3موظف",
+              arabicLabel: "4موظف",
               englishLabel: "Employee4",
               id: 5,
             },
             {
-              arabicLabel: "3موظف",
+              arabicLabel: "5موظف",
               englishLabel: "Employee4",
               id: 6,
             },
             {
-              arabicLabel: "3موظف",
+              arabicLabel: "6موظف",
               englishLabel: "Employee4",
               id: 7,
             },
             {
-              arabicLabel: "3موظف",
+              arabicLabel: "7موظف",
               englishLabel: "Employee4",
               id: 8,
 
@@ -55,8 +55,8 @@ export const dummy_data = {
 
                       children: [
                         {
-                          arabicLabel: "3موظف",
-                          englishLabel: "Employee4",
+                          arabicLabel: "12موظف",
+                          englishLabel: "Employee12",
                           id: 11,
                         },
                       ],
@@ -131,8 +131,8 @@ export const dummy_data = {
               id: 22,
 
               children: [],
-              arabicLabel: "hamo",
-              englishLabel: "hamo",
+              arabicLabel: "a",
+              englishLabel: "a",
             },
           ],
         },
@@ -147,8 +147,8 @@ export const dummy_data = {
           id: 24,
         },
       ],
-      arabicLabel: "hamo",
-      englishLabel: "hamo",
+      arabicLabel: "a",
+      englishLabel: "a",
     },
   ],
 };

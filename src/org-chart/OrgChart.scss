@@ -68,6 +68,7 @@
     // min-width: 150px;
     margin: 0 auto 40px;
     min-width: 250px;
+    border-radius: 5px;
 
     cursor: move; /* fallback if grab cursor is unsupported */
     cursor: grab;
@@ -79,6 +80,7 @@
     width: 70%;
     margin: 0 auto 40px;
     min-width: 250px;
+    border-radius: 5px;
 
     cursor: move; /* fallback if grab cursor is unsupported */
     cursor: grab;
@@ -123,15 +125,9 @@
     background-color: black;
     top: -20px;
   }
-  // .hamada {
-  //   position: absolute;
-  //   width: 100px;
-  //   height: 2px;
-  //   background-color: black;
+  // .horizontal-line {
+  //   position: relative;
   // }
-  .horizontal-line {
-    position: relative;
-  }
   .horizontal-line::before {
     content: "";
     position: absolute;
@@ -140,10 +136,4 @@
     height: 2px;
     background: black;
   }
-  // .horizontal-line + .horizontal-line {
-  //   &:before {
-  //     content: "";
-  //     background-color: red;
-  //   }
-  // }
 }
