@@ -15,6 +15,25 @@ function OrgChart(props) {
     setNodeIsOnDragSpace(false);
   };
 
+  const handelDelete = (indexs) => {
+    let chartDataDeleting = { ...chartData };
+    let removedNode = [...chartDataDeleting.children];
+    let currentNode = indexs.pop();
+    let parentNode = indexs.pop();
+    indexs.forEach((p) => {
+      removedNode = removedNode[p].children;
+    });
+    if (removedNode[parentNode]) {
+      // removing from an ordinary node
+      removedNode[parentNode].children.splice(currentNode, 1);
+    } else {
+      // removing from the head children
+      removedNode.splice(currentNode, 1);
+      chartDataDeleting.children = removedNode;
+    }
+    onChange({ target: { value: { ...chartDataDeleting } } });
+  };
+
   useEffect(() => {
     if (
       draggedNode &&
@@ -153,6 +172,13 @@ function OrgChart(props) {
                   }}
                 >
                   {child.arabicLabel}/{child.englishLabel}
+                  <button
+                    onClick={() => {
+                      handelDelete(indexs);
+                    }}
+                  >
+                    delete
+                  </button>
                 </div>
                 {recursiveRenderChart(
                   child,
