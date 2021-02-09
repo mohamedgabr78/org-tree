@@ -24,7 +24,9 @@ function OrgChart(props) {
         JSON.stringify(nodeIsOnDragSpace.indexs) &&
       !JSON.stringify(nodeIsOnDragSpace.indexs).includes(
         JSON.stringify(draggedNode.indexs).replace("]", "")
-      )
+      ) &&
+      JSON.stringify(draggedNode.indexs.slice(0, -1)) !==
+        JSON.stringify(nodeIsOnDragSpace.indexs)
     ) {
       // dragged node is inside the node key of draggedNode state
       // and the indexs is an array indicating the position of the node in the chart data
