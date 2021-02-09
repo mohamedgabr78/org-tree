@@ -6,7 +6,7 @@ function OrgChart(props) {
   const colors = ["#8dccad", "#f5cc7f"];
 
   const [draggedNode, setDraggedNode] = useState(null);
-  const [nodeDragFinish, setNodeDragFinish] = useState(false);
+  const [nodeDragFinish, setNodeDragFinish] = useState(false); // true when dragged node is just dropped
   const [nodeIsOnDragSpace, setNodeIsOnDragSpace] = useState(false);
 
   const resetDragStates = () => {
@@ -21,7 +21,10 @@ function OrgChart(props) {
       nodeIsOnDragSpace &&
       nodeDragFinish &&
       JSON.stringify(draggedNode.indexs) !==
-        JSON.stringify(nodeIsOnDragSpace.indexs)
+        JSON.stringify(nodeIsOnDragSpace.indexs) &&
+      !JSON.stringify(nodeIsOnDragSpace.indexs).includes(
+        JSON.stringify(draggedNode.indexs).replace("]", "")
+      )
     ) {
       // dragged node is inside the node key of draggedNode state
       // and the indexs is an array indicating the position of the node in the chart data
@@ -31,20 +34,28 @@ function OrgChart(props) {
       // drop node is inside the node key of nodeIsOnDragSpace state
       // and the indexs is an array indicating the position of the node in the chart data
       let _actualdroppedNode = { ...nodeIsOnDragSpace.node };
-      let droppedNodeIndexs = [...nodeIsOnDragSpace.indexs];
+      let droppedNodeIndexs = Array.isArray(nodeIsOnDragSpace.indexs)
+        ? [...nodeIsOnDragSpace.indexs]
+        : nodeIsOnDragSpace.indexs;
 
       // copying the original state
       let _chartData = { ...chartData };
 
       let new_node = [..._chartData.children];
       // putting the node inside the children of the drop node
-      let last_new = droppedNodeIndexs.pop();
-      droppedNodeIndexs.forEach((p) => {
-        new_node = new_node[p].children;
-      });
-      new_node[last_new].children = new_node[last_new].children
-        ? [...new_node[last_new].children, _actualDraggedNode]
-        : [_actualDraggedNode];
+
+      // special condition for inserting in head
+      if (droppedNodeIndexs === "head") {
+        _chartData.children = [..._chartData.children, _actualDraggedNode];
+      } else {
+        let last_new = droppedNodeIndexs.pop();
+        droppedNodeIndexs.forEach((p) => {
+          new_node = new_node[p].children;
+        });
+        new_node[last_new].children = new_node[last_new].children
+          ? [...new_node[last_new].children, _actualDraggedNode]
+          : [_actualDraggedNode];
+      }
 
       // remove the node from its original position
       let removed_node = [..._chartData.children];
@@ -66,7 +77,17 @@ function OrgChart(props) {
       }
 
       onChange({ target: { value: { ..._chartData } } });
-
+      resetDragStates();
+    } else if (
+      nodeIsOnDragSpace &&
+      draggedNode &&
+      nodeDragFinish &&
+      JSON.stringify(nodeIsOnDragSpace.indexs).includes(
+        JSON.stringify(draggedNode.indexs).replace("]", "")
+      )
+    ) {
+      console.log("nodeIsOnDragSpace", nodeIsOnDragSpace);
+      console.log("draggedNode", draggedNode);
       resetDragStates();
     }
   }, [draggedNode, nodeIsOnDragSpace, nodeDragFinish]);
@@ -148,7 +169,16 @@ function OrgChart(props) {
       head && (
         <div className={"org-chart"}>
           <div className={`level level-1 rectangle`}>
-            <div>
+            <div
+              onDragOver={(e) => {
+                e.preventDefault();
+                setNodeIsOnDragSpace({ node: head, indexs: "head" });
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                setNodeIsOnDragSpace(false);
+              }}
+            >
               {head.arabicLabel}/{head.englishLabel}
             </div>
           </div>
