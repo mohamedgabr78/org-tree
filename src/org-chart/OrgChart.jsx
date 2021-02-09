@@ -15,26 +15,6 @@ function OrgChart(props) {
     setNodeIsOnDragSpace(false);
   };
 
-  // const handelDelete = () => {
-  //   let removed_node = [..._chartData.children];
-  //   // putting the node inside the children of the drop node
-  //   let b4_last_remove = draggedNodeIndexs.pop();
-  //   let last_remove = draggedNodeIndexs.pop();
-  //   draggedNodeIndexs.forEach((p) => {
-  //     removed_node = removed_node[p].children;
-  //   });
-  //   if (removed_node[last_remove]) {
-  //     // removing from an ordinary node
-  //     removed_node[last_remove].children = removed_node[
-  //       last_remove
-  //     ].children.filter((el) => el.id !== _actualDraggedNode.id);
-  //   } else {
-  //     // removing from the head children
-  //     removed_node.splice(b4_last_remove, 1);
-  //     _chartData.children = removed_node;
-  //   }
-  // };
-
   useEffect(() => {
     if (
       draggedNode &&
@@ -49,7 +29,6 @@ function OrgChart(props) {
       // dragged node is inside the node key of draggedNode state
       // and the indexs is an array indicating the position of the node in the chart data
       let _actualDraggedNode = { ...draggedNode.node };
-
       let draggedNodeIndexs = [...draggedNode.indexs];
 
       // drop node is inside the node key of nodeIsOnDragSpace state
@@ -172,14 +151,6 @@ function OrgChart(props) {
                   }}
                 >
                   {child.arabicLabel}/{child.englishLabel}
-                  <button
-                    className="delete"
-                    onClick={() => {
-                      // handelDelete();
-                    }}
-                  >
-                    delete
-                  </button>
                 </div>
                 {recursiveRenderChart(
                   child,
