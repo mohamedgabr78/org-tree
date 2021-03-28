@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "./OrgChart.scss";
-import { InputText } from "primereact/inputtext";
 
 function OrgChart(props) {
   const { chartData, onChange } = props;
@@ -8,7 +7,6 @@ function OrgChart(props) {
   const [draggedNode, setDraggedNode] = useState(null);
   const [nodeDragFinish, setNodeDragFinish] = useState(false); // true when dragged node is just dropped
   const [nodeIsOnDragSpace, setNodeIsOnDragSpace] = useState(false);
-  const [add, setAdd] = useState(false);
 
   const resetDragStates = () => {
     setDraggedNode(null);
@@ -19,8 +17,11 @@ function OrgChart(props) {
   const handelDelete = (indexs) => {
     let chartDataDeleting = { ...chartData };
     let removedNode = [...chartDataDeleting.children];
+
     let currentNode = indexs.pop();
+
     let parentNode = indexs.pop();
+
     indexs.forEach((p) => {
       removedNode = removedNode[p].children;
     });
@@ -42,6 +43,7 @@ function OrgChart(props) {
     indexs.forEach((p) => {
       addNode = addNode[p].children;
     });
+
     addNode[currentNode].children =
       addNode[currentNode].children && addNode[currentNode].children.length > 0
         ? [
